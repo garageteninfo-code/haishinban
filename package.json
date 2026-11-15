@@ -1,0 +1,15 @@
+{
+  "name": "haishinban",
+  "private": true,
+  "version": "0.2.0",
+  "description": "配信番（SafeRollout）：Windows アプリ配信の安全セット（試作）。npm install は不要（依存 0）。",
+  "license": "UNLICENSED",
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test --test-concurrency=1 test/*.test.mjs",
+    "scenario": "node scenario/sample-scenario.mjs",
+    "e2e": "node scenario/e2e-gui.mjs",
+    "make-cert": "node tools/make-cert.mjs"
+  }
+}

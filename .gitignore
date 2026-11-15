@@ -1,0 +1,15 @@
+# 組み立ての出力
+bin/
+obj/
+# 動かしたときにできる物（報告・状態・配る物・証明書と鍵・試験の作業場）
+data/
+release/
+certs/
+一時/
+*.pem
+*.key
+*.crt
+*.pfx
+*.p12
+*.log
+node_modules/

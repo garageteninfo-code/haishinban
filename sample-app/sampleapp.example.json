@@ -1,0 +1,11 @@
+{
+  "//": "サンプルアプリの設定の見本。sampleapp.json という名前で SampleApp.exe の隣に置く。値はすべて架空。",
+  "domain": "sample-app",
+  "relayUrl": "https://haishin.example.local:38920/",
+  "//pinnedCertSha256": "node tools/make-cert.mjs が表示した指紋。社内の認証局の証明書を Windows に入れてあるなら空 [] でよい。2 つ入れると証明書の入れ替えができる。",
+  "pinnedCertSha256": ["0000000000000000000000000000000000000000000000000000000000000000"],
+  "//publicKeyFile": "管理画面の「公開鍵を書き出す」で作った public-key.pem。本物のアプリでは、ファイルではなくプログラムに埋め込む。",
+  "publicKeyFile": "public-key.pem",
+  "//dataDir": "空なら %LOCALAPPDATA%\\HaishinSampleApp",
+  "dataDir": ""
+}

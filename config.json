@@ -1,0 +1,45 @@
+{
+  "//": "配信の安全セットの設定。製品名（domain）は C# の UpdateSafetyOptions.Domain と同じにする。",
+  "domain": "sample-app",
+  "//host": "待ち受ける場所。既定は 127.0.0.1（この PC だけ）。社内の端末から報告を受けるときは \"0.0.0.0\" か、この PC の社内の IP。",
+  "host": "127.0.0.1",
+  "port": 38920,
+  "dataDir": "data",
+  "releaseDir": "release",
+  "threshold": {
+    "//": "動いている端末が minActiveInstalls 台以上・落ちた端末が minCrashInstalls 台以上で、落ちる割合が maxCrashRate を超えたら知らせる",
+    "minActiveInstalls": 10,
+    "minCrashInstalls": 3,
+    "maxCrashRate": 0.1,
+    "windowHours": 72
+  },
+  "guard": {
+    "//disabledKinds": "止める種類（例: [\"ipv4\"]）。秘密そのもの（鍵・パスワード等）は止められない。書き間違いは起動しない。",
+    "disabledKinds": [],
+    "//allowHosts": "報告に出てよい URL のホスト（自社の API など）。'.example.jp' と書くとその下の全部。",
+    "allowHosts": [],
+    "allowHexHashes": true,
+    "//myNumberWithoutContext": "true にすると「マイナンバー」の言葉が無い 12 桁でも検査用数字が合えば断る（業務の番号の約 1 割を誤って断る）",
+    "myNumberWithoutContext": false,
+    "//extraRules": "足す規則。[{ \"kind\": \"社員番号\", \"pattern\": \"EMP-\\d{6}\" }]",
+    "extraRules": []
+  },
+  "limits": { "reportsPerHour": 30, "heartbeatsPerHour": 60 },
+  "console": {
+    "//": "管理画面。既定はこの PC（127.0.0.1）からだけ。合言葉は初回にこの PC のブラウザで決める（data\\console-auth.json に scrypt で混ぜた値だけ置く）。",
+    "//allowLan": "true にすると社内の別の PC からも開ける。そのときは allowedHosts（開くときの名前）と https（tls.enabled）が要る。",
+    "allowLan": false,
+    "//allowedHosts": "別の PC から開くときの名前やIP。例: [\"haishin.example.local\", \"192.168.10.5\"]（ポートを省くと上の port）",
+    "allowedHosts": [],
+    "//allowedClients": "管理画面を開いてよい接続元の IP の頭。空なら制限なし。例: [\"192.168.10.\"]",
+    "allowedClients": [],
+    "sessionHours": 8,
+    "allowLanWithoutTls": false
+  },
+  "tls": {
+    "//": "https にするとき enabled を true に。証明書は node tools/make-cert.mjs で作れる（社内の認証局の証明書でもよい）。鍵のファイルは人に渡さない。",
+    "enabled": false,
+    "certFile": "certs/server.crt",
+    "keyFile": "certs/server.key"
+  }
+}

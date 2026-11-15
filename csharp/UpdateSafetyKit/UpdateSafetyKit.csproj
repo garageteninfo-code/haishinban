@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- 標準ライブラリだけ（NuGet の依存 0）。NuGet にはまだ登録していません。 -->
+  <PropertyGroup>
+    <TargetFrameworks>net10.0</TargetFrameworks>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <IsPackable>false</IsPackable>
+    <!-- NuGet に出すときの名前（未登録）。 -->
+    <PackageId>SafeRollout</PackageId>
+    <Product>配信番（SafeRollout）</Product>
+    <RootNamespace>UpdateSafetyKit</RootNamespace>
+    <Version>0.2.0</Version>
+  </PropertyGroup>
+</Project>

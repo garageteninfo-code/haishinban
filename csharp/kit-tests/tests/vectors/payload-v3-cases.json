@@ -1,0 +1,283 @@
+{
+ "_note": "v3 の正規化の共通の例。Node（tools/sign-manifest.test.mjs）と C#（UpdateSafetyKit.Tests）の両方が読む。鍵は含まない。",
+ "valid": [
+  {
+   "name": "最小（段階配信なし・不具合版なし・期限なし）",
+   "domain": "usk-update",
+   "os": "windows",
+   "version": "1.0.0",
+   "sha256": "ABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABAB",
+   "size": 10,
+   "manifest": {
+    "seq": 1
+   },
+   "payload": "usk-update-v3|windows|1.0.0|abababababababababababababababababababababababababababababababab|10|rollout=all|bad=|seq=1|exp=none"
+  },
+  {
+   "name": "段階配信・不具合版（空白・重複・並び）・期限",
+   "domain": "usk-update",
+   "os": "Windows",
+   "version": " 1.2.0 ",
+   "sha256": "abababababababababababababababababababababababababababababababab",
+   "size": 4096,
+   "manifest": {
+    "rollout": {
+     "percent": 30,
+     "salt": "r1"
+    },
+    "rollback": {
+     "badVersions": [
+      " 1.1.0",
+      "1.0.10",
+      "1.1.0",
+      "1.0.9"
+     ]
+    },
+    "seq": 42,
+    "expiresAt": 1800000000
+   },
+   "payload": "usk-update-v3|windows|1.2.0|abababababababababababababababababababababababababababababababab|4096|rollout=30:r1|bad=1.0.10,1.0.9,1.1.0|seq=42|exp=1800000000"
+  },
+  {
+   "name": "別の製品名・0%・salt なし・seq 最大",
+   "domain": "myapp",
+   "os": "linux",
+   "version": "3.0.0",
+   "sha256": "cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+   "size": 0,
+   "manifest": {
+    "rollout": {
+     "percent": 0
+    },
+    "seq": 9007199254740991
+   },
+   "payload": "myapp-v3|linux|3.0.0|cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd|0|rollout=0:|bad=|seq=9007199254740991|exp=none"
+  },
+  {
+   "name": "pre-release と build の版",
+   "domain": "usk-update",
+   "os": "windows",
+   "version": "2.0.0-beta.1+build.5",
+   "sha256": "cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+   "size": 123,
+   "manifest": {
+    "rollout": null,
+    "rollback": null,
+    "seq": 7,
+    "expiresAt": null
+   },
+   "payload": "usk-update-v3|windows|2.0.0-beta.1+build.5|cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd|123|rollout=all|bad=|seq=7|exp=none"
+  }
+ ],
+ "invalid": [
+  {
+   "name": "版に U+0085",
+   "domain": "usk-update",
+   "os": "windows",
+   "version": "1.0.0",
+   "sha256": "abababababababababababababababababababababababababababababababab",
+   "size": 1,
+   "manifest": {
+    "seq": 1
+   }
+  },
+  {
+   "name": "版に U+FEFF",
+   "domain": "usk-update",
+   "os": "windows",
+   "version": "﻿1.0.0",
+   "sha256": "abababababababababababababababababababababababababababababababab",
+   "size": 1,
+   "manifest": {
+    "seq": 1
+   }
+  },
+  {
+   "name": "版に区切り文字 |",
+   "domain": "usk-update",
+   "os": "windows",
+   "version": "1.0|x",
+   "sha256": "abababababababababababababababababababababababababababababababab",
+   "size": 1,
+   "manifest": {
+    "seq": 1
+   }
+  },
+  {
+   "name": "版に日本語",
+   "domain": "usk-update",
+   "os": "windows",
+   "version": "1.0.0版",
+   "sha256": "abababababababababababababababababababababababababababababababab",
+   "size": 1,
+   "manifest": {
+    "seq": 1
+   }
+  },
+  {
+   "name": "OS に空白",
+   "domain": "usk-update",
+   "os": "win dows",
+   "version": "1.0.0",
+   "sha256": "abababababababababababababababababababababababababababababababab",
+   "size": 1,
+   "manifest": {
+    "seq": 1
+   }
+  },
+  {
+   "name": "sha256 が 63 桁",
+   "domain": "usk-update",
+   "os": "windows",
+   "version": "1.0.0",
+   "sha256": "bababababababababababababababababababababababababababababababab",
+   "size": 1,
+   "manifest": {
+    "seq": 1
+   }
+  },
+  {
+   "name": "sha256 が 16 進でない",
+   "domain": "usk-update",
+   "os": "windows",
+   "version": "1.0.0",
+   "sha256": "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+   "size": 1,
+   "manifest": {
+    "seq": 1
+   }
+  },
+  {
+   "name": "大きさが負",
+   "domain": "usk-update",
+   "os": "windows",
+   "version": "1.0.0",
+   "sha256": "abababababababababababababababababababababababababababababababab",
+   "size": -1,
+   "manifest": {
+    "seq": 1
+   }
+  },
+  {
+   "name": "seq が無い",
+   "domain": "usk-update",
+   "os": "windows",
+   "version": "1.0.0",
+   "sha256": "abababababababababababababababababababababababababababababababab",
+   "size": 1,
+   "manifest": {}
+  },
+  {
+   "name": "seq が 0",
+   "domain": "usk-update",
+   "os": "windows",
+   "version": "1.0.0",
+   "sha256": "abababababababababababababababababababababababababababababababab",
+   "size": 1,
+   "manifest": {
+    "seq": 0
+   }
+  },
+  {
+   "name": "seq が小数",
+   "domain": "usk-update",
+   "os": "windows",
+   "version": "1.0.0",
+   "sha256": "abababababababababababababababababababababababababababababababab",
+   "size": 1,
+   "manifest": {
+    "seq": 1.5
+   }
+  },
+  {
+   "name": "seq が文字列",
+   "domain": "usk-update",
+   "os": "windows",
+   "version": "1.0.0",
+   "sha256": "abababababababababababababababababababababababababababababababab",
+   "size": 1,
+   "manifest": {
+    "seq": "3"
+   }
+  },
+  {
+   "name": "seq が 2^53",
+   "domain": "usk-update",
+   "os": "windows",
+   "version": "1.0.0",
+   "sha256": "abababababababababababababababababababababababababababababababab",
+   "size": 1,
+   "manifest": {
+    "seq": 9007199254740992
+   }
+  },
+  {
+   "name": "期限が負",
+   "domain": "usk-update",
+   "os": "windows",
+   "version": "1.0.0",
+   "sha256": "abababababababababababababababababababababababababababababababab",
+   "size": 1,
+   "manifest": {
+    "seq": 1,
+    "expiresAt": -1
+   }
+  },
+  {
+   "name": "percent 101",
+   "domain": "usk-update",
+   "os": "windows",
+   "version": "1.0.0",
+   "sha256": "abababababababababababababababababababababababababababababababab",
+   "size": 1,
+   "manifest": {
+    "seq": 1,
+    "rollout": {
+     "percent": 101
+    }
+   }
+  },
+  {
+   "name": "salt に |",
+   "domain": "usk-update",
+   "os": "windows",
+   "version": "1.0.0",
+   "sha256": "abababababababababababababababababababababababababababababababab",
+   "size": 1,
+   "manifest": {
+    "seq": 1,
+    "rollout": {
+     "percent": 5,
+     "salt": "a|b"
+    }
+   }
+  },
+  {
+   "name": "不具合版に ,",
+   "domain": "usk-update",
+   "os": "windows",
+   "version": "1.0.0",
+   "sha256": "abababababababababababababababababababababababababababababababab",
+   "size": 1,
+   "manifest": {
+    "seq": 1,
+    "rollback": {
+     "badVersions": [
+      "1.0.0,1.0.1"
+     ]
+    }
+   }
+  },
+  {
+   "name": "製品名に大文字と空白",
+   "domain": "Bad Domain",
+   "os": "windows",
+   "version": "1.0.0",
+   "sha256": "abababababababababababababababababababababababababababababababab",
+   "size": 1,
+   "manifest": {
+    "seq": 1
+   }
+  }
+ ]
+}
