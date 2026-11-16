@@ -113,6 +113,8 @@ test/                      … node:test の試験
 
 ## English (summary)
 
+*This English section was translated with AI.*
+
 **Haishin-ban (SafeRollout) 0.2.0** is a prototype "safe rollout kit" for Windows line-of-business apps (WinForms/WPF) that companies distribute from their own servers, especially on closed networks where cloud services cannot be used.
 
 - **What it does:** signed release manifests (sequence number + expiry), staged rollout (e.g. 10%), "halt (0%)" and "revoke this version", automatic rollback decision when a new version crashes twice within 10 minutes of start-up (C#, .NET standard library only). A small Node.js relay (no `npm install`, zero dependencies) receives crash reports and **refuses reports that contain personal data or secrets** (HTTP 422, content not stored). The browser console signs manifests in the browser; the private key is never sent to the server.
